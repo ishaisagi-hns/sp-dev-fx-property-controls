@@ -2,7 +2,6 @@ import * as React from 'react';
 import { IPropertyPanePropertyEditorHostProps, IPropertyPanePropertyEditorHostState } from './IPropertyPanePropertyEditorHost';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
 import { PrimaryButton, DefaultButton, IButtonProps, IconButton } from 'office-ui-fabric-react/lib/Button';
-import AceEditor from 'react-ace';
 import { set } from '@microsoft/sp-lodash-subset';
 import * as telemetry from '../../common/telemetry';
 import styles from './PropertyPanePropertyEditorHost.module.scss';
@@ -43,7 +42,7 @@ export default class PropertyPanePropertyEditorHost extends React.Component<IPro
         const newProperties = JSON.parse(this.state.propertiesJson);
         for (let propName in newProperties) {
             // Do not update dynamic data properties
-            if(!(this.props.webpart.properties[propName] && this.props.webpart.properties[propName].__type === "DynamicProperty")) {
+            if (!(this.props.webpart.properties[propName] && this.props.webpart.properties[propName].__type === "DynamicProperty")) {
                 set(this.props.webpart.properties, propName, newProperties[propName]);
                 if (typeof this.props.webpart.properties[propName].onChange !== 'undefined' && this.props.webpart.properties[propName].onChange !== null) {
                     this.props.webpart.properties[propName].onChange(propName, newProperties[propName]);
@@ -162,15 +161,13 @@ export default class PropertyPanePropertyEditorHost extends React.Component<IPro
                             </div>
                         </div>
                     )}>
-
-                    <AceEditor
-                        mode='ace/mode/json'
-                        theme="monokai"
-                        onChange={this.onChange}
+                    <textarea
                         value={this.state.propertiesJson}
-                        name={`code-property-editor`}
-                        editorProps={{ $blockScrolling: true }}
+                        onChange={(e) => this.onChange(e.target.value)}
+                        style={{ width: '100%', height: '400px' }}
                     />
+
+                    
                 </Panel>
             </div>
         );

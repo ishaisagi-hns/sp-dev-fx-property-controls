@@ -11,16 +11,7 @@ import styles from './PropertyFieldCodeEditorHost.module.scss';
 import FieldErrorMessage from '../errorMessage/FieldErrorMessage';
 import * as telemetry from '../../common/telemetry';
 import * as strings from 'PropertyControlStrings';
-import * as brace from 'brace';
-import AceEditor from 'react-ace';
-import 'brace/mode/json';
-import 'brace/mode/javascript';
-import 'brace/mode/sass';
-import 'brace/mode/typescript';
-import 'brace/mode/html';
-import 'brace/mode/handlebars';
-import 'brace/mode/xml';
-import 'brace/theme/monokai';
+
 
 /**
  * Renders the controls for PropertyFieldCodeEditor component
@@ -225,14 +216,12 @@ export default class PropertyFieldCodeEditorHost extends React.Component<IProper
             </div>
           )}>
 
-          <AceEditor
-            mode={this.props.language}
-            theme="monokai"
-            onChange={this.onChange}
+          <textarea
             value={this.state.code}
-            name={`code-${this.props.targetProperty}`}
-            editorProps={{ $blockScrolling: true }}
+            onChange={(e) => this.onChange(e.target.value)}
+            style={{ width: '100%', height: '400px' }}
           />
+         
         </Panel>
       </div>
     );
